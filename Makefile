@@ -33,3 +33,6 @@ SRCS := customize0.c \
 		set_cords.c
 
 OBJS := $(SRCS:.c=.o)
+
+
+$(NAME): $(OBJS)
