@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:09:41 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 01:33:40 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 08:42:28 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ t_assets	*init_assets(mlx_t *mlx, t_holder *holder)
 {
 	init_game(mlx, holder);
 	holder->assets = malloc(sizeof(t_assets));
+	if (holder->assets == NULL)
+	{
+		perror("Failed to allocate memory for assets");
+		return (NULL);
+	}
 	holder->assets->holder = holder;
 	holder->assets->count = 0;
 	holder->assets->map = holder->map;
 	holder->assets->game = holder->game;
-	holder->assets->game->cord = NULL;
 	holder->assets->colect = init_game(mlx, holder);
-	holder->assets->colect->cord = NULL;
 	holder->assets->player = init_game(mlx, holder);
-	holder->assets->player->cord = NULL;
 	holder->assets->env_back = init_game(mlx, holder);
-	holder->assets->env_back->cord = NULL;
 	holder->assets->env_front = init_game(mlx, holder);
-	holder->assets->env_front->cord = NULL;
 	holder->assets->exit = init_game(mlx, holder);
-	holder->assets->exit->cord = NULL;
+	cord_ass_link_n(holder);
 	assets_links(holder);
 	cord_links(holder);
 	mlx_links(holder);
@@ -83,7 +83,7 @@ t_holder	*init_holder(t_holder **holder)
 	*holder = malloc(sizeof(t_holder));
 	if (*holder == NULL)
 	{
-		perror("Failed to allocate memory for holder");
+		print_error(MALOC_HOLDER);
 		return (NULL);
 	}
 	null_holder(*holder);
@@ -96,7 +96,10 @@ t_wl_pl_bb	*init_bb(void)
 
 	bb = malloc(sizeof(t_wl_pl_bb));
 	if (!bb)
+	{
+		perror("Failed to allocate memory for bb");
 		return (NULL);
+	}
 	bb->wl = 0;
 	bb->wr = 0;
 	bb->wt = 0;

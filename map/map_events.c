@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:55:27 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 02:08:34 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 09:07:01 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	map_events(t_map *map)
 	x = map->assets->exit->cord->cx;
 	y = map->assets->exit->cord->cy;
 	if (map->grid_visited[y][x] != '1' && map->tmp_count != 0)
+	{
+		print_error(MAP_NOT_FLOOD);
 		map->flood = 0;
+	}
 	map->is_valid = (map->player_count == 1) && (map->collectible_count > 0)
 		&& (map->exit_count == 1) && (map->walls == 1) && (map->rect == 1)
 		&& (map->flood == 1);
@@ -38,13 +41,19 @@ int	init_grid(t_map *map)
 
 	map->grid_visited = malloc(sizeof(char *) * map->rows);
 	if (!map->grid_visited)
+	{
+		print_error(MALOC_MAP_VISITED);
 		return (0);
+	}
 	i = 0;
 	while (i < map->rows)
 	{
 		map->grid_visited[i] = malloc(sizeof(char) * map->cols);
 		if (!map->grid_visited[i])
+		{
+			print_error(MALOC_MAP_VISITED);
 			return (0);
+		}
 		i++;
 	}
 	return (1);

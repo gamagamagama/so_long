@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:13:49 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 02:30:53 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 09:11:09 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_structures(mlx_t *mlx, char *path)
 		all_frees(mlx, holder);
 		exit(EXIT_SUCCESS);
 	}
+	print_error(MAP_NOT_PLAYABLE);
 	free_map(holder->map);
 	holder->map = NULL;
 	holder->assets->map = holder->map;

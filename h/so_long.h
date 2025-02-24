@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 05:29:55 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 09:12:11 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,15 +191,15 @@ typedef struct s_holder
 typedef enum s_error
 {
 	WRONG_CHAR,
-	WRONG_FILE,
+	WRONG_FILE_EXT,
+	MALOC_MAP,
+	MALOC_MAP_GRID,
+	MALOC_MAP_VISITED,
+	MALOC_MLX,
+	MALOC_HOLDER,
 	WRONG_MAP,
+	MAP_CHAR,
 	MAP_NOT_FOUND,
-	MAP_NOT_VALID,
-	MAP_NOT_RECT,
-	MAP_NOT_WALLS,
-	MAP_NOT_EXIT,
-	MAP_NOT_PLAYER,
-	MAP_NOT_COLLECT,
 	MAP_NOT_FLOOD,
 	MAP_NOT_PLAYABLE,
 	USAGE,
@@ -389,5 +389,9 @@ mlx_t						*preset_mlx(mlx_t *mlx, int32_t win_width,
 								int32_t win_height);
 mlx_t						*init_mlx_session(int32_t width, int32_t height,
 								char *title);
+//error.c
+void						print_error(t_error error);
+void						cord_ass_link_n(t_holder *holder);
+void						map_frai(mlx_t *mlx, t_holder *holder);
 
 #endif

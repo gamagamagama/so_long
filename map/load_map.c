@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:57:47 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 03:45:15 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 08:30:34 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ t_map	*allocate_map_grid(char *path, t_map *map)
 	def_map(map);
 	map->grid = malloc(sizeof(char *) * (nb_lines + 1));
 	if (!map->grid)
+	{
+		print_error(MALOC_MAP_GRID);
 		return (NULL);
+	}
 	return (map);
 }
 
@@ -47,10 +50,11 @@ t_map	*load_map(char *path, t_map *map)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
+		print_error(MAP_NOT_FOUND);
 		close(fd);
 		free(map);
 		exit(EXIT_FAILURE);
-	}	
+	}
 	if (!allocate_map_grid(path, map))
 	{
 		close(fd);
