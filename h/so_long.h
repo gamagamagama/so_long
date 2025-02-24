@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 12:30:10 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 16:34:32 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # include <errno.h>
 
 # define M_PI 3.14159265358979323846
-# define WINDOW_WIDTH 1080
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define VIEWPORT_SIZE 50
 
 # define BUFFER_SIZE 1024
@@ -59,15 +59,15 @@ typedef enum s_error		t_error;
 
 typedef struct s_wl_pl_bb
 {
-	uint32_t				wl;
-	uint32_t				wr;
-	uint32_t				wt;
-	uint32_t				wb;
-	uint32_t				pl;
-	uint32_t				pr;
-	uint32_t				pt;
-	uint32_t				pb;
-	uint32_t				of;
+	int				wr;
+	int				wt;
+	int				wl;
+	int				wb;
+	int				pl;
+	int				pr;
+	int				pt;
+	int				pb;
+	int				of;
 }							t_wl_pl_bb;
 
 typedef struct s_complex_data
@@ -239,8 +239,8 @@ t_map						*init_map(mlx_t *mlx, t_holder *holder);
 // map_events.c
 int							map_events(t_map *map);
 int							init_grid(t_map *map);
-void						init_visited(t_map *map);
-void						flood_fill(int x, int y, t_map *map);
+//static void					init_visited(t_map *map);
+//static void					flood_fill(int x, int y, t_map *map);
 
 // map_checks.c
 void						er_mp_chck(t_map *map, size_t i, size_t j);
@@ -291,7 +291,7 @@ void						colect_cords_right(t_game *colect, int i);
 void						set_bb_pl(t_wl_pl_bb *bb, int new_x, int new_y,
 								t_game *player);
 void						set_bb_wl(t_wl_pl_bb *bb, t_cord *wall,
-								uint32_t wid, uint32_t hig);
+								int wid, int hig);
 bool						is_wsad(mlx_key_data_t keydata);
 bool						is_pressed(mlx_key_data_t keydata);
 bool						check_movement(t_game *player, int new_x,
@@ -395,5 +395,7 @@ void						print_error(t_error error);
 void						cord_ass_link_n(t_holder *holder);
 void						map_frai(mlx_t *mlx, t_holder *holder);
 void						print_malloc_err(t_error error);
+
+void						k_hook_m(t_graph_data *g);
 
 #endif

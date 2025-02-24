@@ -6,11 +6,48 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:55:27 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 09:07:01 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 13:26:05 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void	init_visited(t_map *map)
+{
+	size_t	j;
+	size_t	k;
+
+	j = 0;
+	while (j < map->rows)
+	{
+		k = 0;
+		while (k < map->cols)
+		{
+			map->grid_visited[j][k] = '0';
+			k++;
+		}
+		j++;
+	}
+}
+
+static void	flood_fill(int x, int y, t_map *map)
+{
+	map->tmp_count += 1;
+	if (x < 0 || y < 0 || (size_t)x >= map->cols || (size_t)y >= map->rows)
+		return ;
+	if (map->tmp_count == -1)
+		map->tmp_count = map->collectible_count;
+	if (map->grid[y][x] == '1' || map->grid_visited[y][x] == '1')
+		return ;
+	if ((map->grid[y][x] == 'C' || map->grid[y][x] == 'E')
+		&& map->grid_visited[y][x] == '0')
+		map->tmp_count--;
+	map->grid_visited[y][x] = '1';
+	flood_fill(x + 1, y, map);
+	flood_fill(x - 1, y, map);
+	flood_fill(x, y + 1, map);
+	flood_fill(x, y - 1, map);
+}
 
 int	map_events(t_map *map)
 {
@@ -20,8 +57,8 @@ int	map_events(t_map *map)
 	init_grid(map);
 	init_visited(map);
 	map->tmp_count = map->collectible_count;
-	flood_fill(map->assets->player->cord->cx,
-		map->assets->player->cord->cy, map);
+	flood_fill(map->assets->player->cord->cx, map->assets->player->cord->cy,
+		map);
 	x = map->assets->exit->cord->cx;
 	y = map->assets->exit->cord->cy;
 	if (map->grid_visited[y][x] != '1' && map->tmp_count != 0)
@@ -57,39 +94,4 @@ int	init_grid(t_map *map)
 		i++;
 	}
 	return (1);
-}
-
-void	init_visited(t_map *map)
-{
-	size_t	j;
-	size_t	k;
-
-	j = 0;
-	while (j < map->rows)
-	{
-		k = 0;
-		while (k < map->cols)
-		{
-			map->grid_visited[j][k] = '0';
-			k++;
-		}
-		j++;
-	}
-}
-
-void	flood_fill(int x, int y, t_map *map)
-{
-	if (x < 0 || y < 0 || (size_t)x >= map->cols || (size_t)y >= map->rows)
-		return ;
-	if (map->tmp_count == -1)
-		map->tmp_count = map->collectible_count;
-	if (map->grid[y][x] == '1' || map->grid_visited[y][x] == '1')
-		return ;
-	if (map->grid[y][x] == 'C' && map->grid_visited[y][x] == '0')
-		map->tmp_count--;
-	map->grid_visited[y][x] = '1';
-	flood_fill(x + 1, y, map);
-	flood_fill(x - 1, y, map);
-	flood_fill(x, y + 1, map);
-	flood_fill(x, y - 1, map);
 }

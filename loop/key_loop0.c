@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:03:55 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:58:05 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 14:03:32 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,10 @@ void	key_esc(t_game *who, mlx_key_data_t keydata)
 	{
 		all_frees(who->setup->mlx, who->assets->holder);
 		exit(EXIT_SUCCESS);
+	}
+	else if (keydata.key == MLX_KEY_M)
+	{
+		k_hook_m(who->assets->exit->setup->graph);
+		k_hook_m(who->setup->graph);
 	}
 }

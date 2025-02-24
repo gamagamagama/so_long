@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:45:48 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:30:08 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 16:43:24 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	custumize_env_back(t_game *env_back)
 	env_back->setup->dep = 15;
 	env_back->setup->data->vp_position_x = 0;
 	env_back->setup->data->vp_position_y = 0;
-	env_back->setup->graph->color = 0xFF0000FF;
+	env_back->setup->graph->color = 0x7F0000FF;
 }
 
 void	custumize_env_front(t_game *env_front)
@@ -54,7 +54,7 @@ void	custumize_exit(t_game *exit)
 	exit->setup->complex->wave_freq = 1.5;
 	exit->setup->data->vp_position_x = 0;
 	exit->setup->data->vp_position_y = 0;
-	exit->setup->graph->color = 0xFF7F00FF;
+	exit->setup->graph->color = 0xFF3FDFFF;
 	exit->setup->dep = 42;
 }
 
