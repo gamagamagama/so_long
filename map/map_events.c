@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:55:27 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:48:27 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:08:34 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ int	map_events(t_map *map)
 	map->is_valid = (map->player_count == 1) && (map->collectible_count > 0)
 		&& (map->exit_count == 1) && (map->walls == 1) && (map->rect == 1)
 		&& (map->flood == 1);
+	return (1);
 }
 
 int	init_grid(t_map *map)
 {
-	int	i;
+	size_t	i;
 
 	map->grid_visited = malloc(sizeof(char *) * map->rows);
 	if (!map->grid_visited)
@@ -49,10 +50,10 @@ int	init_grid(t_map *map)
 	return (1);
 }
 
-static void	init_visited(t_map *map)
+void	init_visited(t_map *map)
 {
-	int	j;
-	int	k;
+	size_t	j;
+	size_t	k;
 
 	j = 0;
 	while (j < map->rows)
@@ -67,9 +68,9 @@ static void	init_visited(t_map *map)
 	}
 }
 
-static void	flood_fill(int x, int y, t_map *map)
+void	flood_fill(int x, int y, t_map *map)
 {
-	if (x < 0 || y < 0 || x >= map->cols || y >= map->rows)
+	if (x < 0 || y < 0 || (size_t)x >= map->cols || (size_t)y >= map->rows)
 		return ;
 	if (map->tmp_count == -1)
 		map->tmp_count = map->collectible_count;

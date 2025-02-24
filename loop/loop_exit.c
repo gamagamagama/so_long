@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:55:21 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:47:28 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:34:02 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	time_hook(void *param)
 
 	asset = (t_game *)param;
 	exit_animation(asset);
-	update_viewport(asset, asset->setup->graph->thickness);
+	update_viewport(asset);
 }
 
 void	exit_animation(t_game *who)

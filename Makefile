@@ -1,10 +1,16 @@
 CC := gcc
 NAME := so_long
-FLAGS := -Wextra -Wall -Werror -Wunreachable-code -Ofast
-H_HEADERS := -I ./h
-LIBMLX := ./MLX42
-MLX_HEADERS := -I ./include -I $(LIBMLX)/include -I $(H_HEADERS)
-LIBMLX := -L $(LIBMLX)/build/ -lmlx42 -lglfw -pthread -lm -ldl
+FLAGS := -Wextra -Wall -Werror 
+H_HEADERS := -I./h
+
+MLX_REPO := https://github.com/codam-coding-college/MLX42.git
+MLX_DIR := ./MLX42
+MLXLIB_INC     := $(MLX_DIR)/include
+MLXLIB_BUILD   := build
+
+#LIBMLX := ./MLX42
+MLX_HEADERS := -I$(MLXLIB_INC)
+LIBMLX := -L$(MLX_DIR)/$(MLXLIB_BUILD)/ -lmlx42 -lglfw -pthread -lm -ldl
 
 SRCS_CUSTOM :=	./custom/customize0.c \
 				./custom/customize1.c
@@ -46,5 +52,44 @@ SRCS := $(SRCS_CUSTOM) $(SRCS_FREE) $(SRCS_GNL) $(SRCS_INIT) $(SRCS_LINK) \
 
 OBJS := $(SRCS:.c=.o)
 
+#########INSTALL_MLX#########
+
+all: get_mlx
+get_mlx:
+	if [ ! -d "$(MLX_DIR)/.git" ]; then \
+		git clone $(MLX_REPO); \
+	fi
+all: build_mlx
+build_mlx: get_mlx
+	@echo "Configuring MLX"
+	cd $(MLX_DIR) && cmake -B $(MLXLIB_BUILD)
+	@echo "Building MLX"
+	cd $(MLX_DIR) && cmake --build $(MLXLIB_BUILD) -j4
+
+####----MAIN----####
+norm:
+	norminette $(SRCS) h/*.h
+
+
+all: $(NAME)
+
+debug: all
+	valgrind --leak-check=full --track-origins=yes ./$(NAME) ./map_file/map.ber
 
 $(NAME): $(OBJS)
+	$(CC) $(FLAGS) $(OBJS) $(MLX_HEADERS) $(H_HEADERS) $(LIBMLX) -o $(NAME)
+
+%.o: %.c | get_mlx
+	$(CC) $(FLAGS) $(MLX_HEADERS) $(H_HEADERS) -c $< -o $@
+
+
+clean:
+	rm -rf $(OBJS)
+	rm -rf $(MLX_DIR)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

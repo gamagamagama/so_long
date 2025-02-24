@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:30:18 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:51:45 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:15:37 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	draw_complex_pattern(t_game *asset, mlx_image_t *img, t_graph_data *g)
 	{
 		g->end_x = compute_end_x(center_x, c);
 		g->end_y = compute_end_y(center_y, c);
-		if (g->end_x >= 0 && g->end_x < img->width && g->end_y >= 0
-			&& g->end_y < img->height)
+		if (g->end_x >= 0 && g->end_x < (int)img->width && g->end_y >= 0
+			&& g->end_y < (int)img->height)
 		{
 			draw_thick_line(img, g);
 		}
@@ -63,9 +63,6 @@ void	draw_complex_pattern(t_game *asset, mlx_image_t *img, t_graph_data *g)
 
 void	recompute_c_variable(t_complex_data *c, t_assets *asset, t_game *ass)
 {
-	int	i;
-
-	i = 10;
 	if (!(ass || c))
 	{
 		free(c);

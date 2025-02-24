@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:07:06 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:37:42 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 01:29:38 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_graph_data	*init_graph_data(void)
 	return (graph);
 }
 
-t_setup	*init_setup(mlx_t *mlx, mlx_image_t *image, t_holder *holder)
+t_setup	*init_setup(t_holder *holder)
 {
 	holder->setup = malloc(sizeof(t_setup));
 	holder->setup->data = init_viewport();

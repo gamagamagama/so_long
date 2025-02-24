@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:54:24 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 05:29:55 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ typedef enum s_error		t_error;
 
 typedef struct s_wl_pl_bb
 {
-	int						wl;
-	int						wr;
-	int						wt;
-	int						wb;
-	int						pl;
-	int						pr;
-	int						pt;
-	int						pb;
-	int						of;
+	uint32_t				wl;
+	uint32_t				wr;
+	uint32_t				wt;
+	uint32_t				wb;
+	uint32_t				pl;
+	uint32_t				pr;
+	uint32_t				pt;
+	uint32_t				pb;
+	uint32_t				of;
 }							t_wl_pl_bb;
 
 typedef struct s_complex_data
@@ -134,7 +134,7 @@ typedef struct s_game
 	t_cord					*cord;
 }							t_game;
 
-typedef struct assets_s
+typedef struct s_assets
 {
 	t_game					*game;
 	t_game					*env_back;
@@ -174,7 +174,7 @@ typedef struct s_cord
 	struct s_cord			*next;
 }							t_cord;
 
-typedef struct holder_s
+typedef struct s_holder
 {
 	mlx_t					*mlx;
 	mlx_image_t				*image;
@@ -202,6 +202,7 @@ typedef enum s_error
 	MAP_NOT_COLLECT,
 	MAP_NOT_FLOOD,
 	MAP_NOT_PLAYABLE,
+	USAGE,
 }							t_error;
 
 // set_cords.c
@@ -215,8 +216,8 @@ void						set_env_front_cord(t_map *map, size_t i, size_t j);
 // render.c
 void						render(t_assets *assets);
 void						del_and_draw(t_game *asset);
-void						static_viewport(t_game *asset, double thickness);
-void						update_viewport(t_game *asset, double thickness);
+void						static_viewport(t_game *asset);
+void						update_viewport(t_game *asset);
 mlx_image_t					*ft_draw_collect(mlx_t *mlx, t_game *asset,
 								mlx_image_t *image, t_cord *cords);
 
@@ -232,14 +233,13 @@ void						recompute_c_variable(t_complex_data *c,
 // map0.c
 void						map_wrapper(mlx_t *mlx, t_holder *holder,
 								char *path);
-t_map						*init_map(mlx_t *mlx, t_game *game,
-								t_holder *holder);
+t_map						*init_map(mlx_t *mlx, t_holder *holder);
 
 // map_events.c
 int							map_events(t_map *map);
 int							init_grid(t_map *map);
-static void					init_visited(t_map *map);
-static void					flood_fill(int x, int y, t_map *map);
+void						init_visited(t_map *map);
+void						flood_fill(int x, int y, t_map *map);
 
 // map_checks.c
 void						er_mp_chck(t_map *map, size_t i, size_t j);
@@ -266,7 +266,7 @@ void						mp_gr(t_map *map, int x, char *line);
 void						mp_gr_lst(t_map *map, int x);
 t_map						*allocate_map_grid(char *path, t_map *map);
 t_map						*load_map(char *path, t_map *map);
-static int					count_lines(const char *path);
+int							count_lines(const char *path);
 
 // link1.c
 void						map_ass_links(t_holder *holder);
@@ -284,6 +284,7 @@ void						set_bb_pl_sec(t_wl_pl_bb *bb, int new_x, int new_y,
 								t_game *player);
 void						check_exit(t_game *player, int new_x, int new_y);
 void						check_tile(t_game *player, int new_x, int new_y);
+void						colect_cords_right(t_game *colect, int i);
 
 // key_loop1.c
 void						set_bb_pl(t_wl_pl_bb *bb, int new_x, int new_y,
@@ -312,10 +313,8 @@ void						def_map(t_map *map);
 
 // init1.c
 t_cord						*init_cord(t_cord **cord);
-t_game						*init_game(mlx_t *mlx, t_holder *holder,
-								char *ident);
-t_assets					*init_assets(mlx_t *mlx, t_cord *cord, t_map *map,
-								t_holder *holder);
+t_game						*init_game(mlx_t *mlx, t_holder *holder);
+t_assets					*init_assets(mlx_t *mlx, t_holder *holder);
 t_holder					*init_holder(t_holder **holder);
 t_wl_pl_bb					*init_bb(void);
 
@@ -324,8 +323,7 @@ mlx_image_t					*init_image(mlx_t *mlx);
 t_vp						*init_viewport(void);
 t_complex_data				*init_complex_data(void);
 t_graph_data				*init_graph_data(void);
-t_setup						*init_setup(mlx_t *mlx, mlx_image_t *image,
-								t_holder *holder);
+t_setup						*init_setup(t_holder *holder);
 
 // init_var.c
 void						init_vp_var(t_vp *vp);
@@ -370,7 +368,7 @@ void						draw_thick_line(mlx_image_t *img, t_graph_data *g);
 void						draw_filled_square(mlx_image_t *img,
 								t_graph_data *g);
 void						print_image_instances(mlx_image_t *image,
-								size_t dep, t_game *a, int z);
+								t_game *a);
 
 // customize0.c
 void						custumizer_pass(t_assets *assets);
@@ -383,5 +381,13 @@ void						custumize_env_front(t_game *env_front);
 void						custumize_exit(t_game *exit);
 void						custumize_colect(t_game *colect);
 void						custumize_player(t_game *player);
+
+// main.c
+int							check_ber(char *path);
+t_map						*first_map(t_map *map);
+mlx_t						*preset_mlx(mlx_t *mlx, int32_t win_width,
+								int32_t win_height);
+mlx_t						*init_mlx_session(int32_t width, int32_t height,
+								char *title);
 
 #endif

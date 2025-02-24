@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:06:43 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:52:54 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:18:57 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	render(t_assets *assets)
 		* assets->env_front->setup->data->vp_size_x;
 	assets->env_front->setup->data->vp_position_y = assets->env_front->cord->cy
 		* assets->env_front->setup->data->vp_size_y;
-	static_viewport(assets->colect, 1);
-	static_viewport(assets->env_front, 1);
-	static_viewport(assets->env_back, 1);
+	static_viewport(assets->colect);
+	static_viewport(assets->env_front);
+	static_viewport(assets->env_back);
 	assets->player->setup->data->vp_position_x = assets->player->cord->cx
 		* assets->player->setup->data->vp_size_x;
 	assets->player->setup->data->vp_position_y = assets->player->cord->cy
 		* assets->player->setup->data->vp_size_y;
-	update_viewport(assets->player, 1);
+	update_viewport(assets->player);
 	assets->exit->setup->data->vp_position_x = assets->exit->cord->cx
 		* assets->exit->setup->data->vp_size_x;
 	assets->exit->setup->data->vp_position_y = assets->exit->cord->cy
 		* assets->exit->setup->data->vp_size_y;
-	update_viewport(assets->exit, 1);
+	update_viewport(assets->exit);
 }
 
 void	del_and_draw(t_game *asset)
@@ -45,7 +45,7 @@ void	del_and_draw(t_game *asset)
 	draw_complex_pattern(asset, asset->setup->image, asset->setup->graph);
 }
 
-void	static_viewport(t_game *asset, double thickness)
+void	static_viewport(t_game *asset)
 {
 	if (!asset || !asset->setup || !asset->setup->image || !asset->setup->data)
 		return ;
@@ -73,7 +73,7 @@ void	static_viewport(t_game *asset, double thickness)
 	}
 }
 
-void	update_viewport(t_game *asset, double thickness)
+void	update_viewport(t_game *asset)
 {
 	t_graph_data	*g;
 
@@ -120,6 +120,6 @@ mlx_image_t	*ft_draw_collect(mlx_t *mlx, t_game *asset, mlx_image_t *image,
 		i++;
 		cord = cord->next;
 	}
-	print_image_instances(image, asset->setup->dep, asset, 1);
+	print_image_instances(image, asset);
 	return (image);
 }

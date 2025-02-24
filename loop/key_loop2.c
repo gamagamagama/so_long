@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:41:52 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:58:42 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 03:03:10 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 void	key_hook_end_wr(t_game *who, t_vp *vp)
 {
-	static int	thickness;
-
-	thickness = 1;
 	vp->vp_position_x = fmax(0, fmin(who->setup->data->vp_position_x,
 				WINDOW_WIDTH - who->setup->data->vp_size));
 	vp->vp_position_y = fmax(0, fmin(who->setup->data->vp_position_y,
 				WINDOW_HEIGHT - who->setup->data->vp_size));
 	check_tile(who, vp->vp_position_x, vp->vp_position_y);
 	check_exit(who, vp->vp_position_x, vp->vp_position_y);
-	update_viewport(who, thickness);
-	static_viewport(who->assets->colect, thickness);
+	update_viewport(who);
+	static_viewport(who->assets->colect);
 }
 
 void	set_bb_pl_sec(t_wl_pl_bb *bb, int new_x, int new_y, t_game *player)
@@ -70,7 +67,7 @@ void	check_tile(t_game *player, int new_x, int new_y)
 	mlx_image_t	*colect;
 	t_game		*colectable;
 	t_wl_pl_bb	*bb;
-	int			i;
+	size_t		i;
 
 	bb = init_bb();
 	colect = player->assets->colect->setup->img_collect;
@@ -85,9 +82,38 @@ void	check_tile(t_game *player, int new_x, int new_y)
 			&& (bb->pt + bb->of < colect->instances[i].y + colect->height / 2)
 			&& colect->instances[i].enabled == true)
 		{
-			colect_cords_right(colectable, i);
+			colect_cords_right(colectable, (int)i);
 		}
 		i++;
 	}
 	free(bb);
+}
+
+void	colect_cords_right(t_game *colect, int i)
+{
+	t_cord	*current;
+
+	current = colect->cord;
+	if (!colect || !colect->cord || !colect->setup
+		|| !colect->setup->img_collect
+		|| !colect->setup->img_collect->instances)
+		return ;
+	while (current != NULL)
+	{
+		if (current->cx == colect->setup->img_collect->instances[i].x / 50
+			&& current->cy == colect->setup->img_collect->instances[i].y
+			/ 50)
+		{
+			current->cx = -1;
+			current->cy = -1;
+			colect->setup->img_collect->instances[i].x = -1;
+			colect->setup->img_collect->instances[i].y = -1;
+			colect->setup->img_collect->instances[i].enabled = false;
+			colect->setup->img_collect->count--;
+		}
+		if (current->next != NULL)
+			current = current->next;
+		else
+			break ;
+	}
 }

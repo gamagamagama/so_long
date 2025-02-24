@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:09:41 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:40:01 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 01:33:40 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cord	*init_cord(t_cord **cord)
 	return (new_cord);
 }
 
-t_game	*init_game(mlx_t *mlx, t_holder *holder, char *ident)
+t_game	*init_game(mlx_t *mlx, t_holder *holder)
 {
 	holder->game = malloc(sizeof(t_game));
 	if (holder->game == NULL)
@@ -43,7 +43,7 @@ t_game	*init_game(mlx_t *mlx, t_holder *holder, char *ident)
 		return (NULL);
 	}
 	holder->image = init_image(mlx);
-	holder->setup = init_setup(mlx, holder->image, holder);
+	holder->setup = init_setup(holder);
 	holder->complex = holder->setup->complex;
 	holder->graph = holder->setup->graph;
 	holder->vp = holder->setup->data;
@@ -52,24 +52,24 @@ t_game	*init_game(mlx_t *mlx, t_holder *holder, char *ident)
 	return (holder->game);
 }
 
-t_assets	*init_assets(mlx_t *mlx, t_cord *cord, t_map *map, t_holder *holder)
+t_assets	*init_assets(mlx_t *mlx, t_holder *holder)
 {
-	init_game(mlx, holder, "init assets game");
+	init_game(mlx, holder);
 	holder->assets = malloc(sizeof(t_assets));
 	holder->assets->holder = holder;
 	holder->assets->count = 0;
 	holder->assets->map = holder->map;
 	holder->assets->game = holder->game;
 	holder->assets->game->cord = NULL;
-	holder->assets->colect = init_game(mlx, holder, "init assets colect");
+	holder->assets->colect = init_game(mlx, holder);
 	holder->assets->colect->cord = NULL;
-	holder->assets->player = init_game(mlx, holder, "init assets player");
+	holder->assets->player = init_game(mlx, holder);
 	holder->assets->player->cord = NULL;
-	holder->assets->env_back = init_game(mlx, holder, "init assets env_back");
+	holder->assets->env_back = init_game(mlx, holder);
 	holder->assets->env_back->cord = NULL;
-	holder->assets->env_front = init_game(mlx, holder, "init assets env_front");
+	holder->assets->env_front = init_game(mlx, holder);
 	holder->assets->env_front->cord = NULL;
-	holder->assets->exit = init_game(mlx, holder, "init assets exit");
+	holder->assets->exit = init_game(mlx, holder);
 	holder->assets->exit->cord = NULL;
 	assets_links(holder);
 	cord_links(holder);

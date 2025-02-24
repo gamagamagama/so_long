@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:57:47 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 22:03:54 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 03:45:15 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,23 @@ t_map	*load_map(char *path, t_map *map)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
+	{
+		close(fd);
+		free(map);
+		exit(EXIT_FAILURE);
+	}	
 	if (!allocate_map_grid(path, map))
 	{
 		close(fd);
-		return (NULL);
+		free(map);
+		exit(EXIT_FAILURE);
 	}
 	map = read_map_from_file(fd, map);
 	close(fd);
 	return (map);
 }
 
-static int	count_lines(const char *path)
+int	count_lines(const char *path)
 {
 	int		fd;
 	int		lines;

@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:29:10 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:46:10 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:33:48 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	k_hook_b_d(t_complex_data *c)
 void	key_hooker_back(mlx_key_data_t keydata, void *param)
 {
 	t_game			*who;
-	static int		thickness = 1;
 	t_complex_data	*c;
 
 	who = (t_game *)param;
@@ -52,5 +51,5 @@ void	key_hooker_back(mlx_key_data_t keydata, void *param)
 		k_hook_b_a(c);
 	if (keydata.key == MLX_KEY_D)
 		k_hook_b_d(c);
-	static_viewport(who, thickness);
+	static_viewport(who);
 }

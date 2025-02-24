@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:38:31 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:57:32 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:13:52 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	draw_filled_square(mlx_image_t *img, t_graph_data *g)
 			g->delta_x++;
 			g->pixel_x = g->start_x + g->delta_x;
 			g->pixel_y = g->start_y + g->delta_y;
-			if (g->pixel_x >= 0 && g->pixel_x < img->width && g->pixel_y >= 0
-				&& g->pixel_y < img->height)
+			if (g->pixel_x >= 0 && (uint32_t)g->pixel_x < img->width
+				&& g->pixel_y >= 0 && (uint32_t)g->pixel_y < img->height)
 			{
 				mlx_put_pixel(img, g->pixel_x, g->pixel_y, g->color);
 			}
@@ -72,8 +72,7 @@ void	draw_filled_square(mlx_image_t *img, t_graph_data *g)
 	}
 }
 
-void	print_image_instances(mlx_image_t *image, size_t dep, t_game *a,
-		int z)
+void	print_image_instances(mlx_image_t *image, t_game *a)
 {
 	int				j;
 	size_t			i;

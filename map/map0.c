@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:27:46 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:49:08 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 02:00:27 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	map_wrapper(mlx_t *mlx, t_holder *holder, char *path)
 {
-	holder->map = init_map(mlx, holder->game, holder);
+	holder->map = init_map(mlx, holder);
 	holder->map = load_map(path, holder->map);
 	map_checks(holder->map);
 	check_walls(holder->map);
@@ -31,9 +31,9 @@ void	map_wrapper(mlx_t *mlx, t_holder *holder, char *path)
 	holder->map->assets = NULL;
 }
 
-t_map	*init_map(mlx_t *mlx, t_game *game, t_holder *holder)
+t_map	*init_map(mlx_t *mlx, t_holder *holder)
 {
-	holder->assets = init_assets(mlx, holder->cord, holder->map, holder);
+	holder->assets = init_assets(mlx, holder);
 	holder->map = malloc(sizeof(t_map));
 	if (holder->map == NULL)
 	{
