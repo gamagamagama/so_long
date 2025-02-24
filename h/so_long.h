@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 16:34:32 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 16:48:04 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <inttypes.h>
 # include <math.h>
@@ -28,7 +29,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <errno.h>
 
 # define M_PI 3.14159265358979323846
 # define WINDOW_WIDTH 1920
@@ -59,15 +59,15 @@ typedef enum s_error		t_error;
 
 typedef struct s_wl_pl_bb
 {
-	int				wr;
-	int				wt;
-	int				wl;
-	int				wb;
-	int				pl;
-	int				pr;
-	int				pt;
-	int				pb;
-	int				of;
+	int						wr;
+	int						wt;
+	int						wl;
+	int						wb;
+	int						pl;
+	int						pr;
+	int						pt;
+	int						pb;
+	int						of;
 }							t_wl_pl_bb;
 
 typedef struct s_complex_data
@@ -239,8 +239,8 @@ t_map						*init_map(mlx_t *mlx, t_holder *holder);
 // map_events.c
 int							map_events(t_map *map);
 int							init_grid(t_map *map);
-//static void					init_visited(t_map *map);
-//static void					flood_fill(int x, int y, t_map *map);
+// static void					init_visited(t_map *map);
+// static void					flood_fill(int x, int y, t_map *map);
 
 // map_checks.c
 void						er_mp_chck(t_map *map, size_t i, size_t j);
@@ -290,8 +290,8 @@ void						colect_cords_right(t_game *colect, int i);
 // key_loop1.c
 void						set_bb_pl(t_wl_pl_bb *bb, int new_x, int new_y,
 								t_game *player);
-void						set_bb_wl(t_wl_pl_bb *bb, t_cord *wall,
-								int wid, int hig);
+void						set_bb_wl(t_wl_pl_bb *bb, t_cord *wall, int wid,
+								int hig);
 bool						is_wsad(mlx_key_data_t keydata);
 bool						is_pressed(mlx_key_data_t keydata);
 bool						check_movement(t_game *player, int new_x,
@@ -390,7 +390,7 @@ mlx_t						*preset_mlx(mlx_t *mlx, int32_t win_width,
 								int32_t win_height);
 mlx_t						*init_mlx_session(int32_t width, int32_t height,
 								char *title);
-//error.c
+// error.c
 void						print_error(t_error error);
 void						cord_ass_link_n(t_holder *holder);
 void						map_frai(mlx_t *mlx, t_holder *holder);
