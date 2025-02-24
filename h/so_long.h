@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 09:12:11 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 12:30:10 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <errno.h>
 
 # define M_PI 3.14159265358979323846
 # define WINDOW_WIDTH 1080
@@ -393,5 +394,6 @@ mlx_t						*init_mlx_session(int32_t width, int32_t height,
 void						print_error(t_error error);
 void						cord_ass_link_n(t_holder *holder);
 void						map_frai(mlx_t *mlx, t_holder *holder);
+void						print_malloc_err(t_error error);
 
 #endif

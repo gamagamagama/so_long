@@ -45,10 +45,14 @@ SRCS_RENDER :=	./render/draw.c \
 				./render/pattern.c \
 				./render/render.c \
 				./render/set_cords.c
+
+SRCS_ERROR := 	./error/error.c
+
 SRCS_MAIN :=	main.c
 
+
 SRCS := $(SRCS_CUSTOM) $(SRCS_FREE) $(SRCS_GNL) $(SRCS_INIT) $(SRCS_LINK) \
-		$(SRCS_LOOP) $(SRCS_MAP) $(SRCS_RENDER) $(SRCS_MAIN)
+		$(SRCS_LOOP) $(SRCS_MAP) $(SRCS_RENDER) $(SRCS_MAIN) $(SRCS_ERROR)
 
 OBJS := $(SRCS:.c=.o)
 

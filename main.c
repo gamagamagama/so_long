@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 23:09:31 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 08:33:35 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/24 12:24:43 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_map	*first_map(t_map *map)
 	map = malloc(sizeof(t_map));
 	if (map == NULL)
 	{
-		print_error(MALOC_MAP);
+		print_malloc_err(MALOC_MAP);
 		return (NULL);
 	}
 	return (map);
@@ -67,7 +67,7 @@ mlx_t	*preset_mlx(mlx_t *mlx, int32_t win_width, int32_t win_height)
 	mlx = malloc(sizeof(mlx_t));
 	if (!mlx)
 	{
-		print_error(MALOC_MLX);
+		print_malloc_err(MALOC_MLX);
 		return (NULL);
 	}
 	free(mlx);
@@ -75,7 +75,7 @@ mlx_t	*preset_mlx(mlx_t *mlx, int32_t win_width, int32_t win_height)
 	mlx = init_mlx_session(win_width, win_height, "Lost in Void");
 	if (!mlx)
 	{
-		print_error(MALOC_MLX);
+		print_malloc_err(MALOC_MLX);
 		return (NULL);
 	}
 	return (mlx);
@@ -88,7 +88,7 @@ mlx_t	*init_mlx_session(int32_t width, int32_t height, char *title)
 	mlx = mlx_init(width, height, title, false);
 	if (!mlx)
 	{
-		print_error(MALOC_MLX);
+		print_malloc_err(MALOC_MLX);
 		return (NULL);
 	}
 	return (mlx);
