@@ -8,7 +8,7 @@
 make deps  
 ```
 ```bash
-#Clone and Build MLX42 lib
+#Clone and Build MLX42 lib + compile so_long
 make all
 ```
 ```bash
