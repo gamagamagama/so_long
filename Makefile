@@ -79,6 +79,7 @@ norm:
 
 deps:
 	sudo apt update
+	sudo apt install -y cmake
 	sudo apt install -y build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 
 all: $(NAME)
