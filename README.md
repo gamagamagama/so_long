@@ -10,6 +10,13 @@ cd so_long
 #to install dependencies on your machine
 make deps  
 ```
+OR
+```bash
+#install deps
+sudo apt update
+sudo apt install -y cmake
+sudo apt install -y build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
+```
 ```bash
 #Clone and Build MLX42 lib + compile so_long
 make all
