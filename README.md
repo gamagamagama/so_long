@@ -2,7 +2,10 @@
 ## Viewer discretion is advised when viewing this file.
 
 ### Usage :
-
+```bash
+git clone https://github.com/gamagamagama/so_long.git
+cd so_long
+```
 ```bash
 #to install dependencies on your machine
 make deps  
