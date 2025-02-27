@@ -17,6 +17,7 @@ sudo apt update
 sudo apt install -y cmake
 sudo apt install -y build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 ```
+INSTALL
 ```bash
 #Clone and Build MLX42 lib + compile so_long
 make all
