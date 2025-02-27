@@ -1,4 +1,4 @@
-# ⚠️ This file may trigger epileptic seizures.⚠️ 
+# ⚠️ This game may trigger epileptic seizures.⚠️ 
 ## Viewer discretion is advised when viewing this file.
 
 ### Usage :
