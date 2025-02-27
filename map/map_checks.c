@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:05:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 08:48:51 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 03:38:22 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	er_mp_chck(t_map *map, size_t i, size_t j)
 		&& map->grid[i][j] != 'E')
 	{
 		print_error(MAP_CHAR);
-		all_frees(map->assets->holder->mlx, map->assets->holder);
+		map_frai(map->assets->holder->mlx, map->assets->holder);
 		exit(EXIT_FAILURE);
 	}
 }

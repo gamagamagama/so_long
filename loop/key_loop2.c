@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:41:52 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 03:03:10 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:46:05 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,7 @@ void	check_exit(t_game *player, int new_x, int new_y)
 	if (colect->count == 0)
 	{
 		i = 0;
-		if (((bb->pr - bb->of > exit_out->instances[i].x - exit_out->width / 2)
-				&& (bb->pl + bb->of < exit_out->instances[i].x + exit_out->width
-					/ 2) && (bb->pb - bb->of > exit_out->instances[i].y
-					- exit_out->height / 2) && (bb->pt
-					+ bb->of < exit_out->instances[i].y + exit_out->height
-					/ 2)))
+		if ((exit_recast(exit_out, bb, i)) == true)
 		{
 			free(bb);
 			all_frees(player->setup->mlx, player->assets->holder);
@@ -76,10 +71,11 @@ void	check_tile(t_game *player, int new_x, int new_y)
 	i = 0;
 	while (colect->count > i)
 	{
-		if ((bb->pr - bb->of > colect->instances[i].x - colect->width / 2)
-			&& (bb->pl + bb->of < colect->instances[i].x + colect->width / 2)
-			&& (bb->pb - bb->of > colect->instances[i].y - colect->height / 2)
-			&& (bb->pt + bb->of < colect->instances[i].y + colect->height / 2)
+		if ((bb->pr - bb->of > colect->instances[i].x - (int)colect->width / 2)
+			&& (bb->pl + bb->of < colect->instances[i].x + (int)colect->width
+				/ 2) && (bb->pb - bb->of > colect->instances[i].y
+				- (int)colect->height / 2) && (bb->pt
+				+ bb->of < colect->instances[i].y + (int)colect->height / 2)
 			&& colect->instances[i].enabled == true)
 		{
 			colect_cords_right(colectable, (int)i);
@@ -101,8 +97,7 @@ void	colect_cords_right(t_game *colect, int i)
 	while (current != NULL)
 	{
 		if (current->cx == colect->setup->img_collect->instances[i].x / 50
-			&& current->cy == colect->setup->img_collect->instances[i].y
-			/ 50)
+			&& current->cy == colect->setup->img_collect->instances[i].y / 50)
 		{
 			current->cx = -1;
 			current->cy = -1;

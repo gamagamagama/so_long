@@ -6,17 +6,23 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:20:05 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 20:38:49 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:50:41 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int free_flag)
 {
 	static char	*string_buffer;
 	char		*line;
 
+	if (free_flag == 1)
+	{
+		free(string_buffer);
+		string_buffer = NULL;
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	string_buffer = ft_reader(fd, string_buffer);
@@ -73,7 +79,6 @@ char	*ft_line(char *string_buffer)
 	if (string_buffer[i] == '\n')
 	{
 		line[i] = string_buffer[i];
-		i++;
 	}
 	line[i] = '\0';
 	return (line);

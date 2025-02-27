@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 16:48:04 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:55:13 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,9 +232,9 @@ void						recompute_c_variable(t_complex_data *c,
 								t_assets *asset, t_game *ass);
 
 // map0.c
-void						map_wrapper(mlx_t *mlx, t_holder *holder,
-								char *path);
-t_map						*init_map(mlx_t *mlx, t_holder *holder);
+void						map_wrapper(mlx_t *mlx, t_holder *holder);
+void						init_map_wrap(mlx_t *mlx, t_holder *holder);
+// t_map						*init_map(mlx_t *mlx, t_holder *holder);
 
 // map_events.c
 int							map_events(t_map *map);
@@ -265,9 +265,9 @@ void						key_hooker_back(mlx_key_data_t keydata,
 
 void						mp_gr(t_map *map, int x, char *line);
 void						mp_gr_lst(t_map *map, int x);
-t_map						*allocate_map_grid(char *path, t_map *map);
+int							allocate_map_grid(char *path, t_map *map);
 t_map						*load_map(char *path, t_map *map);
-int							count_lines(const char *path);
+int							line_check(int fd);
 
 // link1.c
 void						map_ass_links(t_holder *holder);
@@ -306,10 +306,8 @@ void						key_da(mlx_key_data_t keydata, int *new_x,
 void						key_esc(t_game *who, mlx_key_data_t keydata);
 
 // init2.c
-void						init_structures(mlx_t *mlx, char *path);
+void						init_structures(mlx_t *mlx, t_map *map);
 void						null_holder(t_holder *holder);
-void						map_wrapper(mlx_t *mlx, t_holder *holder,
-								char *path);
 void						def_map(t_map *map);
 
 // init1.c
@@ -332,7 +330,7 @@ void						init_complex_var(t_complex_data *complex);
 void						init_graph_var(t_graph_data *graph);
 
 // gnl.c
-char						*get_next_line(int fd);
+char						*get_next_line(int fd, int free_flag);
 char						*ft_reader(int fd, char *result);
 char						*ft_line(char *string_buffer);
 char						*ft_next(char *string_buffer);
@@ -395,7 +393,16 @@ void						print_error(t_error error);
 void						cord_ass_link_n(t_holder *holder);
 void						map_frai(mlx_t *mlx, t_holder *holder);
 void						print_malloc_err(t_error error);
-
 void						k_hook_m(t_graph_data *g);
 
+// first_map_wrap.c
+t_map						*first_map_wrap(t_map *map, char *argv);
+
+// helpers.c
+void						fc(char *line, int fd);
+int							bad_len(int first_len, char *line, int fd);
+void						ft_put_number(int number);
+int							count_lines(const char *path);
+bool						exit_recast(mlx_image_t *exit_out, t_wl_pl_bb *bb,
+								int i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:03:55 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 14:03:32 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 04:17:00 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		who->setup->data->vp_position_y = new_y;
 		who->setup->complex->wave_amplitude = wa;
 		who->setup->counteee += 1;
-		fprintf(stderr, "%ld\n", who->setup->counteee);
+		ft_put_number(who->setup->counteee);
+		write(1, "\n", 1);
 	}
 	key_hook_end_wr(who, who->setup->data);
 }

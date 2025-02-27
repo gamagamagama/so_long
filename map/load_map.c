@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:57:47 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 12:26:49 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:42:47 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,29 @@ void	mp_gr(t_map *map, int x, char *line)
 {
 	map->grid[x] = line;
 	map->rows = x;
-	map->cols = ft_strlen(line) - 1;
+	map->cols = ft_strlen(line);
 }
 
 void	mp_gr_lst(t_map *map, int x)
 {
 	map->grid[x] = NULL;
 	map->rows = x;
-	map->cols += 1;
 }
 
-t_map	*allocate_map_grid(char *path, t_map *map)
+int	allocate_map_grid(char *path, t_map *map)
 {
 	int	nb_lines;
 
 	nb_lines = count_lines(path);
 	if (nb_lines <= 0)
-		return (NULL);
-	def_map(map);
-	map->grid = malloc(sizeof(char *) * (nb_lines + 1));
+		return (0);
+	map->grid = malloc(sizeof(char *) * (nb_lines + 2));
 	if (!map->grid)
 	{
 		print_malloc_err(MALOC_MAP_GRID);
-		return (NULL);
+		return (0);
 	}
-	return (map);
+	return (1);
 }
 
 t_map	*load_map(char *path, t_map *map)
@@ -55,10 +53,11 @@ t_map	*load_map(char *path, t_map *map)
 		free(map);
 		exit(EXIT_FAILURE);
 	}
-	if (!allocate_map_grid(path, map))
+	else if (!allocate_map_grid(path, map))
 	{
 		print_error(MAP_NOT_PLAYABLE);
 		close(fd);
+		free_map_grid(map);
 		free(map);
 		exit(EXIT_FAILURE);
 	}
@@ -67,26 +66,20 @@ t_map	*load_map(char *path, t_map *map)
 	return (map);
 }
 
-int	count_lines(const char *path)
+int	line_check(int fd)
 {
-	int		fd;
-	int		lines;
 	char	*line;
+	int		len;
 
-	lines = 0;
-	line = NULL;
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	while (1)
+	line = get_next_line(fd, 0);
+	if (!line || ft_strlen(line) == 0 || line[0] == '\n')
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		if (line[0] != '\n')
-			lines++;
+		get_next_line(-1, 1);
 		free(line);
+		close(fd);
+		return (-1);
 	}
-	close(fd);
-	return (lines);
+	len = ft_strlen(line);
+	free(line);
+	return (len);
 }

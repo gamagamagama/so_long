@@ -6,28 +6,29 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:27:46 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 09:01:13 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:43:27 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	map_wrapper(mlx_t *mlx, t_holder *holder, char *path)
+void	map_wrapper(mlx_t *mlx, t_holder *holder)
 {
-	holder->map = init_map(mlx, holder);
-	holder->map = load_map(path, holder->map);
+	init_map_wrap(mlx, holder);
 	map_checks(holder->map);
 	if (holder->map->player_count != 1 || holder->map->exit_count != 1
 		|| holder->map->collectible_count < 1)
 	{
 		perror("Invalid count of player, colectable or exit");
 		map_frai(mlx, holder);
+		exit(EXIT_FAILURE);
 	}
 	check_walls(holder->map);
 	if (holder->map->walls == 0 || holder->map->rect == 0)
 	{
 		perror("Map is not surrounded by walls or is not rectangle");
 		map_frai(mlx, holder);
+		exit(EXIT_FAILURE);
 	}
 	find_exit_cords(holder->map);
 	map_events(holder->map);
@@ -36,17 +37,25 @@ void	map_wrapper(mlx_t *mlx, t_holder *holder, char *path)
 	holder->map->assets = NULL;
 }
 
-t_map	*init_map(mlx_t *mlx, t_holder *holder)
+void	init_map_wrap(mlx_t *mlx, t_holder *holder)
 {
 	holder->assets = init_assets(mlx, holder);
-	holder->map = malloc(sizeof(t_map));
-	if (holder->map == NULL)
-	{
-		perror("Failed to allocate memory for map");
-		return (NULL);
-	}
 	map_ass_links(holder);
 	map_cord_links(holder);
 	map_mlx_links(holder, mlx);
-	return (holder->map);
 }
+
+// t_map	*init_map(mlx_t *mlx, t_holder *holder)
+// {
+// 	holder->assets = init_assets(mlx, holder);
+// 	holder->map = malloc(sizeof(t_map));
+// 	if (holder->map == NULL)
+// 	{
+// 		perror("Failed to allocate memory for map");
+// 		return (NULL);
+// 	}
+// 	map_ass_links(holder);
+// 	map_cord_links(holder);
+// 	map_mlx_links(holder, mlx);
+// 	return (holder->map);
+// }

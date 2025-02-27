@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 23:09:31 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 12:24:43 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:49:14 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int32_t	main(int argc, char **argv)
 {
 	mlx_t	*mlx;
 	t_map	*map;
+	char	*path;
 
 	map = NULL;
 	mlx = NULL;
@@ -24,16 +25,17 @@ int32_t	main(int argc, char **argv)
 		print_error(USAGE);
 		return (EXIT_FAILURE);
 	}
-	if (!check_ber(argv[1]))
+	path = argv[1];
+	map = first_map_wrap(map, path);
+	if (!map)
 	{
-		print_error(WRONG_FILE_EXT);
 		return (EXIT_FAILURE);
 	}
-	map = first_map(map);
-	map = load_map(argv[1], map);
 	mlx = preset_mlx(mlx, map->cols * 50, map->rows * 50);
-	free_map(map);
-	init_structures(mlx, argv[1]);
+	if (!mlx)
+		return (EXIT_FAILURE);
+	get_next_line(-1, 1);
+	init_structures(mlx, map);
 	mlx_terminate(mlx);
 	mlx = NULL;
 	return (EXIT_SUCCESS);
@@ -44,8 +46,8 @@ int	check_ber(char *path)
 	size_t	i;
 
 	i = ft_strlen(path);
-	if (path[i - 1] != 'r' || path[i - 2] != 'e'
-		|| path[i - 3] != 'b' || path[i - 4] != '.')
+	if (path[i - 1] != 'r' || path[i - 2] != 'e' || path[i - 3] != 'b'
+		|| path[i - 4] != '.')
 		return (0);
 	return (1);
 }

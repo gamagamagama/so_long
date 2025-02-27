@@ -6,20 +6,21 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 02:13:49 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 09:11:09 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:49:56 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_structures(mlx_t *mlx, char *path)
+void	init_structures(mlx_t *mlx, t_map *map)
 {
 	t_holder	*holder;
 
 	holder = NULL;
 	holder = init_holder(&holder);
 	holder->mlx = mlx;
-	map_wrapper(mlx, holder, path);
+	holder->map = map;
+	map_wrapper(mlx, holder);
 	if (holder->map->is_valid)
 	{
 		free_map(holder->map);

@@ -1,6 +1,6 @@
 CC := gcc
 NAME := so_long
-FLAGS := -Wextra -Wall -Werror 
+FLAGS := -Wextra -Wall -Werror -g
 H_HEADERS := -I./h
 
 MLX_REPO := https://github.com/codam-coding-college/MLX42.git
@@ -48,11 +48,14 @@ SRCS_RENDER :=	./render/draw.c \
 
 SRCS_ERROR := 	./error/error.c
 
+SRCS_MW := 		first_map_wrap.c \
+				helpers.c
+
 SRCS_MAIN :=	main.c
 
 
 SRCS := $(SRCS_CUSTOM) $(SRCS_FREE) $(SRCS_GNL) $(SRCS_INIT) $(SRCS_LINK) \
-		$(SRCS_LOOP) $(SRCS_MAP) $(SRCS_RENDER) $(SRCS_MAIN) $(SRCS_ERROR)
+		$(SRCS_LOOP) $(SRCS_MAP) $(SRCS_RENDER) $(SRCS_MAIN) $(SRCS_ERROR) $(SRCS_MW)
 
 OBJS := $(SRCS:.c=.o)
 
@@ -74,6 +77,9 @@ build_mlx: get_mlx
 norm:
 	norminette $(SRCS) h/*.h
 
+deps:
+	sudo apt update
+	sudo apt install -y build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 
 all: $(NAME)
 

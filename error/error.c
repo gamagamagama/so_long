@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 05:30:18 by matus             #+#    #+#             */
-/*   Updated: 2025/02/24 13:56:01 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:40:32 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	print_error(t_error error)
 	if (error == USAGE)
 	{
 		errno = EINVAL;
-		perror("Usage: ./so_long map_file/map[NUMBER 0-5].ber (without[])");
+		perror("Usage:\n"
+			"./so_long map_file/map[0-13 or 42].ber");
 	}
 	if (error == WRONG_FILE_EXT)
 	{
@@ -63,7 +64,8 @@ void	map_frai(mlx_t *mlx, t_holder *holder)
 	all_frees(mlx, holder);
 	exit(EXIT_FAILURE);
 }
-void k_hook_m(t_graph_data *g)
+
+void	k_hook_m(t_graph_data *g)
 {
-    g->color = 0xFFFFFFFF;
+	g->color = 0xFFFFFFFF;
 }

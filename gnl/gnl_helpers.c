@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:25:38 by matus             #+#    #+#             */
-/*   Updated: 2025/02/23 21:34:50 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/27 05:32:43 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ size_t	ft_strlen(char *result)
 	if (!result)
 		return (0);
 	while (result[i] != '\0')
+	{
 		i++;
+	}
 	return (i);
 }
 
@@ -79,7 +81,7 @@ t_map	*read_map_from_file(int fd, t_map *map)
 	int		x;
 
 	x = 0;
-	line = get_next_line(fd);
+	line = get_next_line(fd, 0);
 	while (line != NULL)
 	{
 		if (ft_strlen(line) > 0 && line[ft_strlen(line) - 1] == '\n')
@@ -93,8 +95,9 @@ t_map	*read_map_from_file(int fd, t_map *map)
 		{
 			free(line);
 		}
-		line = get_next_line(fd);
+		line = get_next_line(fd, 0);
 	}
+	free(line);
 	mp_gr_lst(map, x);
 	return (map);
 }
