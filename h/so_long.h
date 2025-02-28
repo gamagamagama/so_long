@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:36:42 by matus             #+#    #+#             */
-/*   Updated: 2025/02/27 05:55:13 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/28 12:10:15 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,4 +405,9 @@ void						ft_put_number(int number);
 int							count_lines(const char *path);
 bool						exit_recast(mlx_image_t *exit_out, t_wl_pl_bb *bb,
 								int i);
+								
+//futures.c
+void    k_hook_n(t_game *who);
+void k_hook_uiop(t_game *who, mlx_key_data_t keydata);
+
 #endif

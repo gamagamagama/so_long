@@ -6,7 +6,7 @@
 /*   By: matus <matus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:03:55 by matus             #+#    #+#             */
-/*   Updated: 2025/02/27 04:17:00 by matus            ###   ########.fr       */
+/*   Updated: 2025/02/28 14:30:22 by matus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,17 @@ void	key_esc(t_game *who, mlx_key_data_t keydata)
 		k_hook_m(who->assets->exit->setup->graph);
 		k_hook_m(who->setup->graph);
 	}
+	else if (keydata.key == MLX_KEY_N)
+	{
+		k_hook_n(who->assets->env_back);
+		k_hook_n(who->assets->env_front);
+		k_hook_n(who->assets->exit);
+		k_hook_n(who->assets->colect);
+		k_hook_n(who->assets->player);
+	}
+	// else if (keydata.action == MLX_REPEAT && keydata.key == MLX_KEY_U)
+	// {
+	// 	k_hook_uiop(who->assets->colect, keydata);
+	// }
+
 }

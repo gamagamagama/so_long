@@ -49,7 +49,8 @@ SRCS_RENDER :=	./render/draw.c \
 SRCS_ERROR := 	./error/error.c
 
 SRCS_MW := 		first_map_wrap.c \
-				helpers.c
+				helpers.c \
+				futures.c
 
 SRCS_MAIN :=	main.c
 
@@ -61,12 +62,12 @@ OBJS := $(SRCS:.c=.o)
 
 #########INSTALL_MLX#########
 
-all: get_mlx
+
 get_mlx:
 	if [ ! -d "$(MLX_DIR)/.git" ]; then \
 		git clone $(MLX_REPO); \
 	fi
-all: build_mlx
+#all: build_mlx
 build_mlx: get_mlx
 	@echo "Configuring MLX"
 	cd $(MLX_DIR) && cmake -B $(MLXLIB_BUILD)
@@ -82,7 +83,7 @@ deps:
 	sudo apt install -y cmake
 	sudo apt install -y build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 
-all: $(NAME)
+all: build_mlx $(NAME) 
 
 debug: all
 	valgrind --leak-check=full --track-origins=yes ./$(NAME) ./map_file/map.ber
